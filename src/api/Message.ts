@@ -1,4 +1,4 @@
-import Client from "./Client"
+import Client from "../Client"
 import Member from "./Member"
 import User from "./User"
 
@@ -7,7 +7,7 @@ interface Embed {
     description?: string
 }
 
-export class Message {
+export default class Message {
     private client: Client
     type: number
     id: string

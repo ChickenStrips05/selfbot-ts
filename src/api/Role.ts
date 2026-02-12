@@ -1,7 +1,7 @@
 // UNFINISHED
 
-import Client from "./Client"
-import { formatImgUrl } from "./Utils"
+import Client from "../Client"
+import { formatImgUrl } from "../Utils"
 
 export default class Role {
     client: Client

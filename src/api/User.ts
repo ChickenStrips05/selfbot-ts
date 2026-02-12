@@ -1,6 +1,6 @@
-import Client from "./Client"
-import { Clan } from "./Types"
-import { formatImgUrl } from "./Utils"
+import Client from "../Client"
+import { Clan } from "../Types"
+import { formatImgUrl } from "../Utils"
 
 
 export default class User {

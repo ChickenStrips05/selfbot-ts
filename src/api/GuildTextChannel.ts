@@ -1,6 +1,6 @@
-import Client from "./Client"
-import { Message } from "./Message"
-import { MessageSendOptions, PermissionOverwrite } from "./Types"
+import Client from "../Client"
+import Message from "./Message"
+import { MessageSendOptions, PermissionOverwrite } from "../Types"
 
 export default class GuildTextChannel{
     client: Client

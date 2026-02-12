@@ -1,8 +1,8 @@
-import Client from "./Client"
-import { Message } from "./Message"
-import { MessageSendOptions } from "./Types"
+import Client from "../Client"
+import Message from "./Message"
+import { MessageSendOptions } from "../Types"
 import User from "./User"
-import { formatImgUrl } from "./Utils"
+import { formatImgUrl } from "../Utils"
 
 export default class DMChannel {
     client: Client

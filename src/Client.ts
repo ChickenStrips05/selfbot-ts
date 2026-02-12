@@ -1,9 +1,9 @@
-import DMChannel from "./DMChannel"
+import DMChannel from "./api/DMChannel"
 import EventEmitter from "./EventEmitter"
-import GuildTextChannel from "./GuildTextChannel"
-import { Message } from "./Message"
+import GuildTextChannel from "./api/GuildTextChannel"
+import Message from "./api/Message"
 import Rest from "./Rest"
-import { MessageReference, MessageSendOptions } from "./Types"
+import { MessageSendOptions } from "./Types"
 import { formatImgUrl } from "./Utils"
 
 interface GuildSubscription {

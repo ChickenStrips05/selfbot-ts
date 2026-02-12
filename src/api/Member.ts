@@ -1,8 +1,8 @@
 // UNFINISHED!
 
-import Client from "./Client"
+import Client from "../Client"
 import User from "./User"
-import { formatImgUrl } from "./Utils"
+import { formatImgUrl } from "../Utils"
 
 export default class Member {
     client: Client
