@@ -6,38 +6,25 @@
 The data structures are inspired by discord.js module.
 Huge thanks to the [Discord Userdoccers](https://github.com/discord-userdoccers) for reverse-engineering and creating some data structures that I used, [website](https://docs.discord.food/).
 
-This is not an NPM module. You can clone the GitHub repo and modify index.ts to make your own selfbot.
+### Huge update!
+I have published the code to the NPM registry, so this is now an official module.
 
-This code uses the `dotenv` module to parse the .env config, however it is not required.
-
-You can run this code with any TypeScript runner, I use `tsx`
-
-### To run:
+### To install:
 ```bash
-npm install tsx@latest
-npx tsx index.ts
+npm install selfbot-ts
 ```
 ### Example code
 
 ```typescript
 // Simple ping/pong command thing
-import Client from "./Client"
-import { config } from "dotenv"
-import { Message } from "./Message"
-config({ quiet: true })
+import { config } from "dotenv";
+import { Client, Message } from "selfbot-ts";
+config({quiet: true})
 
 const client = new Client(process.env.CLIENT_TOKEN!)
 
-const guildId = "" // guild id to listen for messages
-
 client.once("READY", async () => {
     console.log(`Logged in as ${client.globalName}`)
-
-    // await client.updateGuildSubscriptions({[guildId]: {activities: true, typing: true, threads: true}}) 
-    
-    // this will make Discord send all message events from this guild to the client.
-    // All dm events will still be sent without this
-    // if not included, Discord may not send events to the client unless it has been recently active in that guild.
 })
 
 client.on("MESSAGE_CREATE", async (message: Message) => {

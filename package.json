@@ -1,6 +1,6 @@
 {
   "name": "selfbot-ts",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple Discord selfbot made with TypeScript",
   "type": "module",
   "main": "dist/index.cjs",
@@ -13,13 +13,24 @@
       "types": "./dist/index.d.ts"
     }
   },
+  "keywords": [
+    "discord",
+    "selfbot",
+    "typescript",
+    "api"
+  ],
   "files": [
     "dist"
   ],
+  "author": {
+    "name": "ChickenStrips05",
+    "url": "https://github.com/ChickenStrips05"
+  },
   "scripts": {
     "build": "tsup src/index.ts --format esm,cjs --dts",
     "dev": "tsx src/index.ts",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "pack": "npm pack --pack-destination ./dist/"
   },
   "dependencies": {
     "ws": "^8.19.0"
