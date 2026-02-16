@@ -19,4 +19,8 @@ export default class Rest {
     async PATCH(url: string, body: any): Promise<Response> {
         return await fetch(url, {method: "PATCH", headers: {"Authorization": this.token}, body: body})
     }
+
+    async PUT(url: string): Promise<Response> {
+        return await fetch(url, {method: "PUT", headers: {"Authorization": this.token}})
+    }
 }

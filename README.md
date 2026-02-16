@@ -17,8 +17,8 @@ npm install selfbot-ts
 
 ```typescript
 // Simple ping/pong command thing
-import { config } from "dotenv";
-import { Client, Message } from "selfbot-ts";
+import { config } from "dotenv"
+import { Client, Message } from "selfbot-ts"
 config({quiet: true})
 
 const client = new Client(process.env.CLIENT_TOKEN!)

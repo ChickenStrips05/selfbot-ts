@@ -1,6 +1,8 @@
 import Client from "../Client"
+import { ProfileMetadata, UpdateMember, UpdateSelfMember, UpdateSelfMemberProfile } from "../Types"
 import { formatImgUrl } from "../Utils"
 import Emoji from "./Emoji"
+import Member from "./Member"
 import Role from "./Role"
 import Sticker from "./Sticker"
 
@@ -109,6 +111,36 @@ export default class Guild {
         })
     }
 
+    async getMember(userId: string): Promise<Member> {
+        return await this.client.getGuildMember(this.id, userId)
+    }
+
+    async getSelfMember(): Promise<Member> {
+        return await this.client.getSelfMember(this.id)
+    }
+
+    async updateMember(userId: string, options: UpdateMember): Promise<Member> {
+        return await this.client.updateMember(this.id, userId, options)
+    }
+
+    async updateSelfMember(options: UpdateSelfMember): Promise<Member> {
+        // most options require premium
+        return await this.client.updateSelfMember(this.id, options)
+    }
+
+    async updateSelfMemberProfile(options: UpdateSelfMemberProfile): Promise<ProfileMetadata>  {
+        // most options require premium
+        return await this.client.updateSelfMemberProfile(this.id, options)
+    }
+
+    async kickMember(userId: string) {
+        return await this.client.kickMember(this.id, userId)
+    }
+
+    async leave() {
+        return await this.client.leaveGuild(this.id)
+    }
+
     iconUrl(format: string|null = null, size: number|null = null) {
         return formatImgUrl(`https://cdn.discordapp.com/icons/${this.id}/${this.icon}`, format, size)
     }
@@ -128,4 +160,6 @@ export default class Guild {
     discoverySplashUrl(format: string|null = null, size: number|null = null) {
         return formatImgUrl(`https://cdn.discordapp.com/discovery-splashes/${this.id}/${this.discoverySplash}`, format, size)
     }
+
+    
 }

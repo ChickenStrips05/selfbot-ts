@@ -1,5 +1,5 @@
 import Client from "../Client"
-import { Clan } from "../Types"
+import { AvatarDecorationData, Clan, Collectibles, DisplayNameStyle } from "../Types"
 import { formatImgUrl } from "../Utils"
 
 
@@ -10,6 +10,9 @@ export default class User {
     globalName: string
     discriminator: string
     avatar: string
+    avatarDecorationData: AvatarDecorationData
+    collectibles: Collectibles 
+    displayNameStyles: DisplayNameStyle
     bot?: boolean
     flags?: number
     publicFlags?: number
@@ -26,6 +29,9 @@ export default class User {
         this.globalName = (data.global_name !== null) ? data.global_name : data.username
         this.discriminator = data.discriminator
         this.avatar = data.avatar
+        this.avatarDecorationData = data.avatar_decoration_data
+        this.collectibles = data?.collectibles || null
+        this.displayNameStyles = data?.display_name_styles || null
         this.bot = data.bot || false
         this.flags = data.flags || null
         this.publicFlags = data.public_flags || null

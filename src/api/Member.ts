@@ -3,39 +3,52 @@
 import Client from "../Client"
 import User from "./User"
 import { formatImgUrl } from "../Utils"
+import { AvatarDecorationData, Collectibles, DisplayNameStyle } from "../Types"
 
 export default class Member {
     client: Client
-    id: string
-    user: User | null
-    nick: string
+    guildId: string
+    user: User
+    nick?: string
+    avatar?: string
+    avatarDecorationData?: AvatarDecorationData
+    collectibles?: Collectibles
+    displayNameStyles?: DisplayNameStyle
+    banner?: string
+    bio?: string
     roles: string[]
-    premiumSince: any
-    pending: any
-    mute: any
-    flags: any
-    deaf: any
-    communicationsDisabledUntil: any
-    joinedAt: any
-    avatar: any
-    banner: any
+    joinedAt: string
+    premiumSince: string
+    deaf?: boolean
+    mute?: boolean
+    pending?: boolean
+    communicationDisabledUntil?: string
+    unusualDmActivityUntil?: string
+    flags: number
+    permissions?: string
     
-    constructor (data: any, client: Client) {
+    constructor (data: any, client: Client, guildId: string) {
         this.client = client
+        this.guildId = guildId
 
-        this.id = data.id
-        this.nick = data.nick
-        this.user = data?.user ? new User(data.user, client) : null
+        this.user = new User(data.user, client)
+        this.nick = data?.nick
+        this.avatar = data?.avatar
+        this.avatarDecorationData = data?.avatar_decoration_data || null
+        this.collectibles = data?.collectibles || null
+        this.displayNameStyles = data?.display_name_styles || null
+        this.banner = data?.banner || null
+        this.bio = data?.bio || null
         this.roles = data.roles
-        this.premiumSince = data.premium_since
-        this.pending = data.pending
-        this.mute = data.mute
-        this.flags = data.flags
-        this.deaf = data.deaf
-        this.communicationsDisabledUntil = data.communications_disabled_until
         this.joinedAt = data.joined_at
-        this.avatar = data.avatar
-        this.banner = data.banner
+        this.premiumSince = data?.premium_since || null
+        this.deaf = data?.deaf || null
+        this.mute = data?.mute || null
+        this.pending = data?.pending || null
+        this.communicationDisabledUntil = data?.communication_disabled_until || null
+        this.unusualDmActivityUntil = data?.unusual_dm_activity_until || null
+        this.flags = data.flags
+        this.permissions = data?.permissions || null
 
         Object.defineProperty(this, "client", {
             value: client,
@@ -44,7 +57,23 @@ export default class Member {
         })
     }
 
-    avatarUrl(format: string = "webp", size: number = 0) {
-        return formatImgUrl(`https://cdn.discordapp.com/avatars/${this.id}/${this.avatar}`, format, size)
+    async addRole(roleId: string) {
+        return await this.client.addRoleToMember(this.guildId, this.user.id, roleId)
+    }
+
+    async removeRole(roleId: string) {
+        return await this.client.removeRoleFromMember(this.guildId, this.user.id, roleId)
+    }
+
+    async kick() {
+        return await this.client.kickMember(this.guildId, this.user.id)
+    }
+
+    avatarUrl(format: string|null = null, size: number|null = null) {
+        return formatImgUrl(`https://cdn.discordapp.com/guilds/${this.guildId}/users/${this.user.id}/avatars/${this.avatar}`, format, size)
+    }
+
+    bannerUrl(format: string|null = null, size: number|null = null) {
+        return formatImgUrl(`https://cdn.discordapp.com/guilds/${this.guildId}/users/${this.user.id}/banners/${this.avatar}`, format, size)
     }
 }

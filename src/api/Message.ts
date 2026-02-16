@@ -1,4 +1,5 @@
 import Client from "../Client"
+import { MessageReference, PartialUser } from "../Types"
 import Member from "./Member"
 import User from "./User"
 
@@ -16,17 +17,16 @@ export default class Message {
     content: string | null
     embeds: Embed[]
     flags: number
-    mentions: User[]
+    mentions: PartialUser[]
     mentionRoles: string[]
     nonce: string | number
     attachments: any
     tts: any
     pinned: any
-    messageReference: any
+    messageReference: MessageReference
     referencedMessage: any
     channelId: string
     guildId: string | null
-    member: any
     authorId: any
     author: User
     constructor(data: any, client: Client) {
@@ -50,7 +50,6 @@ export default class Message {
 
         this.channelId = data.channel_id
         this.guildId = data?.guild_id
-        this.member = data?.member ? new Member(data.member, this.client) : null
         this.authorId = data.author.id
         this.author = new User(data.author, this.client)
 

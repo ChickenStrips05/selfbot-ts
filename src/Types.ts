@@ -1,10 +1,36 @@
 // Huge thanks to https://docs.discord.food/ Discord UserDocs for some data structures
 
+import Member from "./api/Member"
+
 export interface Clan {
     identity_guild_id?: string,
     identity_enabled?: boolean,
     tag?: string,
     badge?: string
+}
+
+export interface AvatarDecorationData {
+	asset: string
+	sku_id: string
+	expires_at: number | null
+}
+
+export interface NameplateData {
+	asset: string
+	sku_id: string
+	label: string
+	palette: string
+	expires_at: number | null
+}
+
+export interface Collectibles {
+	nameplate: NameplateData | null
+}
+
+export interface DisplayNameStyle {
+	font_id: number
+	effect_id: number
+	colors: number
 }
 
 export interface PartialUser {
@@ -13,9 +39,9 @@ export interface PartialUser {
 	discriminator: string
 	global_name?: string | null
 	avatar: string | null
-	avatar_decoration_data?: any | null
-	collectibles?: any | null
-	display_name_styles?: any | null
+	avatar_decoration_data?: AvatarDecorationData | null
+	collectibles?: Collectibles | null
+	display_name_styles?: DisplayNameStyle | null
 	primary_guild?: Clan | null
 	bot?: boolean
 	system?: boolean
@@ -173,5 +199,110 @@ export interface StickerUpdate {
 	name?: string
 	description?: string | null
 	tags?: string
+}
+
+
+export interface UpdateMember {
+	nick?: string | null
+	roles?: string[]
+	mute?: boolean
+	deaf?: boolean
+	channel_id?: string
+	communication_disabled_until?: string | null
+	flags?: number
+}
+
+export interface UpdateSelfMember {
+	nick?: string | null
+	avatar?:  any | null
+	avatar_decoration_id?: string | null
+	avatar_decoration_sku_id?: string | null
+	collectibles?: Collectibles | null
+	display_name_font_id?: number | null
+	display_name_effect_id?: number | null
+	display_name_colors?: number
+	pronouns?: string | null
+	bio?: string | null
+	banner?:  any | null
+}
+
+export interface UpdateSelfMemberProfile {
+	pronouns?: string | null
+	bio?: string | null
+	banner?:  any | null
+	accent_color?: number | null
+	theme_colors?: [number, number]
+	popout_animation_particle_type?: string | null
+	emoji_id?: string | null
+	profile_effect_id?: string | null
+}
+
+export interface ProfileEffect {
+	id: string
+	expires_at: number | null
+}
+
+export interface ProfileMetadata {
+	guild_id?: string
+	pronouns: string
+	bio?: string
+	banner?: string | null
+	accent_color?: number | null
+	theme_colors?: [number, number]
+	popout_animation_particle_type?: string | null
+	emoji?: Emoji | null
+	profile_effect?: ProfileEffect | null
+}
+
+export interface GuildChannelSubscription {
+	[key: string]: [[number, number]]
+}
+
+export interface GuildSubscription {
+	typing?: boolean,
+	activities?: boolean,
+	threads?: boolean
+	channels?: GuildChannelSubscription
+}
+
+export interface GuildSubscriptions {
+	[key: string]: GuildSubscription
+}
+
+export interface ClientStatus {
+	desktop?: string
+	mobile?: string
+	web?: string
+	embedded?: string
+	vr?: string
+}
+
+export enum Status {
+	online,
+	idle,
+	dnd,
+	invisible,
+	offline,
+	unknown
+}
+
+export interface Presence {
+	user: PartialUser
+	guild_id?: string
+	status: string
+	activities: any[] // add activity object later
+	hidden_activities?: any[]
+	client_status: ClientStatus
+	has_played_game?: boolean
+}
+
+export interface GuildMembersChunk {
+	guild_id: string
+	members: Member[]
+	chunk_index: number
+	chunk_count: number
+	not_found?: string[]
+	presences?: Presence[]
+	nonce?: string
 }
 
