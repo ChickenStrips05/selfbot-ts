@@ -10,7 +10,7 @@ import Role from "./api/Role"
 import Guild from "./api/Guild"
 import Emoji from "./api/Emoji"
 import Sticker from "./api/Sticker"
-
+import {WebSocket} from "ws"
 interface GuildSubscription {
     typing?: boolean,
     activities?: boolean,
@@ -47,13 +47,13 @@ export default class Client extends EventEmitter {
         this.Rest = new Rest(token)
 
         this.ws_connection = new WebSocket("wss://gateway.discord.gg/?encoding=json&v=9")
-        this.ws_connection.onopen = () => {
+        this.ws_connection.on("open", () => {
             this.ws_connection.send(JSON.stringify({ "op": 2, "d": { "token": token, "capabilities": null, "properties": {}, "client_state": { "guild_versions": {} } } }))
-        }
+        })
 
-        this.ws_connection.onmessage = (message: MessageEvent) => {
+        this.ws_connection.on("message", (message) => {
             try {
-                const json = JSON.parse(message.data)
+                const json = JSON.parse(message.toString())
                 if (json.s) {
                     this.lastSequenceNumber = json.s
                 }
@@ -99,7 +99,7 @@ export default class Client extends EventEmitter {
             } catch (e) {
                 console.warn("Error parsing discord WS message:", e)
             }
-        }
+        })
     }
 
     avatarUrl(format: string = "webp", size: number = 0) {
